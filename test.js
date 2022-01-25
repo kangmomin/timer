@@ -1,9 +1,10 @@
-import Timer from './index'
+import Timer from './index.js'
 
 const testList = [1, 21, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0,1, 2, 3, 4, 5, 6, 7, 8, 9, 0]
 const pure_for = new Timer()
 const for_of = new Timer()
 const for_each = new Timer()
+const timer = new Timer()
 
 let result = 0
 let pureResult = []
@@ -12,7 +13,18 @@ let eachResult = []
 
 pure_for.init()    
 for_of.init()
-// for_each.init()
+for_each.init()
+timer.init()
+
+timer.start()
+setTimeout(() => {
+    timer.end()
+    console.log("timer: ", String(timer.time) + "s")
+}, 1000)
+
+console.time("test")
+setTimeout(() => console.timeEnd("test"), 1000)
+
 
 result = 0
 for (let i = 0; i < 1000; i++) {
@@ -26,7 +38,7 @@ for (let i = 0; i < pureResult.length; i++) {
     result += pureResult[i]
 }
 
-console.log(result / pureResult.length)
+console.log("for: ", result / pureResult.length)
 
 // ========================================
 //               for of
@@ -43,7 +55,7 @@ for (let i = 0; i < ofResult.length; i++) {
     result += ofResult[i]
 }
 
-console.log(result / ofResult.length)
+console.log("for each: ", result / ofResult.length)
 
 // ========================================
 //               for of
@@ -60,7 +72,7 @@ for (let i = 0; i < eachResult.length; i++) {
     result += eachResult[i]
 }
 
-console.log(result / eachResult.length)
+console.log("for of: ", result / eachResult.length)
 
 function pureFor(testList) {
     for (let i = 0; i < testList.length; i++) {
@@ -68,7 +80,7 @@ function pureFor(testList) {
     }
 }
 function forOf(testList) {
-    for (test of testList) {
+    for (const test of testList) {
         const x = test
     }
 }
